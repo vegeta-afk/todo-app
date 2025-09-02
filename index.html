@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    />
+    <style>
+      .int-box-hide {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="todo-container">
+      <div><input class="input_box" type="text" /></div>
+      <button onclick="createtodoitem()" class="input_button">Add</button>
+      <div class="todo-item"></div>
+    </div>
+
+    <script>
+      function createtodoitem() {
+        let vlinput = document.querySelector(".input_box").value.trim();
+
+        if (vlinput === "") {
+          alert("please write something");
+        } else {
+          let todoitem = document.createElement("div");
+          todoitem.innerHTML = `
+            <span>${vlinput}</span>
+            <span class="int-box-hide">
+              <input type="text" />
+              <i onclick="editTodo(event)" class="fa-solid fa-pen-to-square"></i>
+            </span>
+            <button onclick="editToggle(event)">Edit</button>
+            <i onclick="delete_todo(event)" class="fa-solid fa-trash"></i>
+          `;
+
+          document.querySelector(".todo-item").appendChild(todoitem);
+          document.querySelector(".input_box").value = "";
+        }
+      }
+
+      function editTodo(e) {
+        let EditVal = e.target.previousElementSibling.value.trim();
+        if (EditVal !== "") {
+          e.target.parentElement.previousElementSibling.innerText = EditVal;
+        }
+        e.target.previousElementSibling.value = "";
+        e.target.parentElement.classList.add("int-box-hide");
+        e.target.parentElement.nextElementSibling.style.display =
+          "inline-block";
+      }
+
+      function editToggle(e) {
+        e.target.previousElementSibling.classList.remove("int-box-hide");
+        e.target.style.display = "none";
+      }
+
+      function delete_todo(e) {
+        e.target.parentElement.remove();
+      }
+    </script>
+  </body>
+</html>
